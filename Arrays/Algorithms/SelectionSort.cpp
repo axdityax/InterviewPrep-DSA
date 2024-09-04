@@ -1,44 +1,53 @@
 #include <iostream>
+#include <vector>
+
 using namespace std;
 
-int main() {
+// Function to find the index of the smallest element in an array
+int findSmallest(vector<int> &arr)
+{
+	int smallest = arr[0];	// Initialize the smallest element
+	int smallest_index = 0; // Initialize the index of the smallest element
 
-	int a[] = {6, 0, 1, 5, 4, 3, 2};
-	int n = sizeof(a) / sizeof(int);
-
-	for (int pos = 0; pos < n - 1; ++pos)
+	for (int i = 1; i < arr.size(); i++)
 	{
-		int min = pos;
-		for (int j = pos + 1; j < n; ++j)
+		if (arr[i] < smallest)
 		{
-			if (a[j] < a[min]) {
-				min = j;
-			}
+			smallest = arr[i];
+			smallest_index = i;
 		}
-		swap(a[pos], a[min]);
 	}
 
-	for (int i = 0; i < n; ++i)
+	return smallest_index;
+}
+
+// Selection sort algorithm
+vector<int> selectionSort(vector<int> &arr)
+{
+	vector<int> newArr; // Create a new empty array to store the sorted elements
+
+	for (int i = 0; i < arr.size(); i++)
 	{
-		cout << a[i] << " ";
+		int smallest = findSmallest(arr);  // Find the index of the smallest element
+		newArr.push_back(arr[smallest]);   // Add the smallest element to the new array
+		arr.erase(arr.begin() + smallest); // Remove the smallest element from the original array
 	}
 
+	return newArr;
+}
+
+int main()
+{
+	vector<int> arr = {5, 3, 6, 2, 10};
+
+	vector<int> sortedArr = selectionSort(arr);
+
+	cout << "Sorted array: ";
+	for (int num : sortedArr)
+	{
+		cout << num << " ";
+	}
+	cout << endl;
 
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
